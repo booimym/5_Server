@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 //Servlet코드를 작성하기 위해서는 HttpServlet을 상속받아야 한다.
-public class SevletEx2 extends HttpServlet{
+public class ServletEx2 extends HttpServlet{
 
 	//Get방식 요청을 처리하는 메소드
 	@Override
