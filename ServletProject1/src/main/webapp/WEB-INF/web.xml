@@ -34,7 +34,7 @@
 	
 	<!-- example2.do 요청에 대한 Servlet 연결 -->
 	
-	<servlet>
+	<!-- <servlet>
 		<servlet-name>ex2</servlet-name>
 		<servlet-class>edu.kh.suvlet.controller.SuvletEx2</servlet-class>
 	</servlet>
@@ -42,6 +42,6 @@
 	<servlet-mapping>
 		<servlet-name>ex2</servlet-name>
 		<url-pattern>/example2.do</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 	 
 </web-app>

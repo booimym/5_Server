@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 // - 요청, 응답을 위한 방법(메서드) 제공
 // - tomcat에서 제공하는 클래스
 
+
+@WebServlet("/login")
 public class ServletEx1 extends HttpServlet {
 
 	@Override
