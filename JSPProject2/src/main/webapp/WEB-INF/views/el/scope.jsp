@@ -69,9 +69,11 @@
         <li>
             request scope message : ${message}
         </li>
-         <li>
+        
+        <li>
             request scope sessionValue : ${sessionValue}
         </li>
+        
         <li>
             request scope appValue : ${appValue}
         </li>
