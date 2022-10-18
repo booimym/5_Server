@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>수업용 프로젝트</title>
 
-    <link rel = "stylesheet" href = "/project1/resources/css/main-style.css">
+    <link rel = "stylesheet" href = "/resources/css/main-style.css">
     <script src="https://kit.fontawesome.com/f7459b8054.js" crossorigin="anonymous"></script>
 </head>
 
@@ -44,112 +44,100 @@
     -->
 
     <main>
-        <header>
-            <section>
-                <!-- 클릭 시 메인페이지로 이동하는 로고 -->
-                <a href = "#">
-                                <%-- 절대경로로 변경하자 --%>
-                    <img src = "/project1/resources/images/logo.jpg" id ="home-logo">
-                </a>
-            </section>
-            <section>
-                <article class = "search-area">
+       
+       <%-- header.jsp 추가(포함) --%>
+        <%-- 
+            JSP 액션 태그 중 include
+            -해당 위치에 page 속성으로 지정된 jsp파일의 내용이 포함됨.
+            -jsp 파일의 경로는 /webapp 폴더를 기준으로 작성한다.
 
-                    <!-- form : 내부 input 태그의 값을 서버 또는 페이지로 전달(제출) -->
-                    <form action = "#">
-                        <fieldset>
-                            <input type = "search" id="query" name="query"
-                            placeholder="검색어를 입력해주세요" >
-                            <button type ="submit" id="search-btn" class="fa-solid fa-magnifying-glass">
-                                <!-- 돋보기는 글자(특수문자)로 취급되기 때문에, font-size 등 다 적용됨(꾸미기 가능!) -->
-                            </button>
-                        </fieldset>
-                    </form>
-                </article>
-            </section>
-            
-        </header>
-
-        <nav>
-            <ul>
-                <%-- <li><a href = "#">공지사항</a></li>
-                <li><a href = "#">자유게시판</a></li>
-                <li><a href = "#">질문게시판</a></li>
-                <li><a href = "#">FAQ</a></li>
-                <li><a href = "#">1:1문의</a></li> --%>
-
-                <c:forEach var = "boardType" items = "${boardTypeMap}">
-                
-                <%-- 
-                    EL을 이용해서 Map 데이터를 다루는 방법
-                
-                    key ==> ${변수명.key}
-                    value ==> ${변수명.value}
-                
-                --%>
-
-                <li><a href="/board/${boardType.key}/list">${boardType.value}</a></li>
-                
-                </c:forEach>
-
-
-
-
-            </ul>
-
-        </nav>
+         --%>
+        <jsp:include page = "/WEB-INF/views/common/header.jsp"/>
 
         <section class = "content"> 
-            <section class = "content-1"></section>
-
+            <section class = "content-1"> ${loginMember}</section>
+               
             <section class="content-2">
-                <form action="#" name = "login-frm">
-                    <fieldset id ="id-pw-area"> <!-- 아이디,비밀번호,로그인 버튼 있는 곳 -->
-                        <section>
-                            <input type = "text" name = "inputId" placeholder="아이디"
-                            autocomplete="off">
-                            <!-- autocomplete="off" : 자동완성 안 하겠당 -->
-                            <input type = "password" name = "inputPw" placeholder="비밀번호">
-                        </section>
-        
-                        <section>
-                            <!-- type = "submit"이 기본값 -->
-                            <button>로그인</button>
-                        </section>
-                    </fieldset>
-        
-                    <!-- label 태그 내부에 input태그를 작성하면 자동으로 연결된다. -->
-                    <label>
-                        <input type = "checkbox" name = "saveId"> 아이디 저장
-                    </label>
-        
-                    <!-- 회원가입 | ID/PW 찾기 -->
-                    <article id="signup-find-area">
-                        <a href = "#">회원가입</a>
-                        <span>|</span>
-                        <a href = "#">ID/PW찾기</a>
-        
-                    </article>
-                </form>
+
+                <%-- 로그인 여부에 따라 출력 화면을 변경하겠다! --%>
+
+                <c:choose>
+                    <%--if  로그인 x인 경우,   --%>
+                    <c:when test = "${empty sessionScope.loginMember}">
+                    
+                                    <%--절대 경로 --%>
+                        <form action="/member/login" name = "login-frm" method = "POST">
+                            <fieldset id ="id-pw-area"> <!-- 아이디,비밀번호,로그인 버튼 있는 곳 -->
+                                <section>
+                                    <input type = "text" name = "inputEmail" placeholder="이메일" 
+                                    autocomplete="off" value = "${cookie.saveId.value}"> 
+                                                    <%-- 쿠키 중. saveId에 .저장된 값을 의미한다.... --%>
+                                    <!-- autocomplete="off" : 자동완성 안 하겠당 -->
+                                    <input type = "password" name = "inputPw" placeholder="비밀번호">
+                                </section>
+                
+                                <section>
+                                    <!-- type = "submit"이 기본값 -->
+                                    <button>로그인</button>
+                                </section>
+                            </fieldset>
+
+                            <%-- 쿠키에 saveId가 있을 경우 --%>
+                            <c:if test ="${!empty cookie.saveId.value}">
+
+                                <%-- temp 변수 선언 : 
+                                    이 변수는 쿠키에 saveId가 있을 경우에만 만들어짐....그리고
+                                    page scope이기 때문에 page 어디서든 사용가능, == if문 밖에 나가도 쓸 수 있다!!!
+                                --%>
+                                <c:set var = "temp" value = "checked" />
+                            
+                            
+                            </c:if>
+
+
+                
+                            <!-- label 태그 내부에 input태그를 작성하면 자동으로 연결된다. -->
+                            <label>
+                                <input type = "checkbox" name = "saveId" ${temp}> 아이디 저장
+                                                                        <%-- 만약에 쿠키에 saveId가 있으면 checked이고/없으면 null임 근데 el은 null을 빈칸으로 취급ㅋ --%>
+                            </label>
+                
+                            <!-- 회원가입 | ID/PW 찾기 -->
+                            <article id="signup-find-area">
+                                <a href = "#">회원가입</a>
+                                <span>|</span>
+                                <a href = "#">ID/PW찾기</a>
+                
+                            </article>
+                        </form>
+                    </c:when>
+                    <%-- else 로그인 되어있는 경우 --%>
+                    <c:otherwise>
+                        <article class = "login-area">
+                        
+                            <%-- 회원 프로필 이미지 --%>
+                            <a href="#">
+                                <img id = "member-profile" src = "/resources/images/banana.png">
+                            </a>
+                            <%-- 회원 정보 + 로그아웃 버튼 --%>
+                            <div class = "my-info">
+                                <div>
+                                <a href ="#" id = "nickname">${loginMember.memberNickname}</a>
+                                <a href ="/member/logout" id = "logout-btn">로그아웃</a>
+                                </div>
+                                <p>${loginMember.memberEmail}</p>
+                            </div>
+                        </article>
+                    </c:otherwise>
+
+                </c:choose>
+            
             </section>
         </section>
     </main>
 
-    <footer>
-        <p>
-            Copyright &copy; KH Information Educational Institute A-Class
-        </p>
-        <article>
-            <a href="#">프로젝트 소개</a>
-            <span> | </span>
-            <a href="#">이용약관</a>
-            <span> | </span>
-            <a href="#">개인정보처리방침</a>
-            <span> | </span>
-            <a href="#">고객센터</a>
-        </article>
-    </footer>
-
+   <%-- footer.jsp 포함시키는 코드 --%>
+    <jsp:include page = "/WEB-INF/views/common/footer.jsp"/>
 
 </body>
 </html>
