@@ -27,9 +27,29 @@
 
             <%-- 헤더 오른쪽 상단 메뉴 --%>
             <div id = "header-top-menu">
-                <a href="/">메인페이지</a>
-                |
-                <a href="#">로그인</a>
+                <c:choose>
+                    <c:when test ="${empty sessionScope.loginMember}"> <%--로그인x인 경우--%>
+                        <a href="/">메인페이지</a>
+                        |
+                        <a href="/member/login">로그인</a>
+                    </c:when>
+
+                    <c:otherwise>  <%--로그인 o인 경우--%>
+                        <label for = "header-menu-toggle">
+                            ${loginMember.memberNickname}
+                            <i class = "fa-solid fa-caret-down"></i>  <%-- fontawesome? --%>
+                        </label>
+
+                        <input type = "checkbox" id = "header-menu-toggle">   <%-- 스위치 --%>
+
+                        <div id = "header-menu">
+                            <a href="/">내정보</a>
+                            <a href="/member/logout">로그아웃</a>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+
+               
             </div>
             
         </header>

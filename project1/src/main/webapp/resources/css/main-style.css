@@ -328,6 +328,50 @@ header{ position : relative;/*상대적 기준 제공*/}
     font-size : 15px;
     font-weight: bold;
 }
+/* 메뉴 on/off 체크박스임!  */
+#header-menu-toggle{
+    display: none; /*일단 체크박스 없앰 ㅋ*/
+}
+/* label 태그 중 for 속성 값이 header-menu-toggle */
+label[for='header-menu-toggle']{
+    cursor : pointer;
+}
+label[for='header-menu-toggle']:hover{
+    text-decoration: underline;
+}
+#header-menu-toggle + div {
+    display: none; /*일단 안보이게 만들기 ㅋ*/
+}
+
+#header-menu-toggle:checked + div {  /* 체크된 경우의 체크박스 다음의 div를 말함*/
+    display: block;
+}
+ /* 닉네임 클릭 시 보이는 메뉴 */
+ #header-menu{
+    position:absolute;
+    z-index : 500px;
+    width:100px;
+    height: 80px;
+    right:0;
+    margin-top:5px;
+    border : 1px solid black;
+ }
+
+ #header-menu > a {
+    display: flex; /*flex도 외부에서는 block이니까 한줄씩 차지한다...*/
+    height : 50%; /*각각 50%씩 공간 차지하게 해라...*/
+    justify-content : center;
+    align-items: center;
+ }
+ #header-menu > a:first-child {
+    border-bottom: 1px solid #ccc; /*아래에 얇은 줄*/
+
+}
+
+#header-menu > a:hover {
+    background-color : #455ba890; /*마우스 올렸을 때 색변하기*/
+
+}
 
 /*************************************************************/
 /*로그인 성공 시 화면*/

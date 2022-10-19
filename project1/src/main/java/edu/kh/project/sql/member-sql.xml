@@ -11,5 +11,12 @@
 	AND MEMBER_EMAIL = ?
 	AND MEMBER_PW = ?
 	</entry>
+	
+	<entry key = "signUp">
+	INSERT INTO "MEMBER"
+	VALUES (SEQ_MEMBER_NO.NEXTVAL, ?,?,
+	?,?,?,
+	DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+	</entry>
    
 </properties>
